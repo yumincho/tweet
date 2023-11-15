@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model dummy {
+  number Int     @id
+  type   String? @db.VarChar(3)
+  text   String? @db.Text
+}
+
+model User {
+  Nickname String    @id @db.VarChar(20)
+  Comment  Comment[]
+  Tweets   Tweet[]
+}
+
+model Tweet {
+  Id             Int       @id
+  AuthorNickname String    @db.VarChar(20)
+  Content        String    @db.VarChar(140)
+  Date           DateTime
+  Comments       Comment[]
+  Author         User      @relation(fields: [AuthorNickname], references: [Nickname])
+
+  @@index([AuthorNickname], map: "Tweet_AuthorNickname_fkey")
+}
+
+model Comment {
+  Id             Int      @id
+  TweetId        Int
+  AuthorNickname String   @db.VarChar(20)
+  Content        String
+  Date           DateTime
+  Author         User     @relation(fields: [AuthorNickname], references: [Nickname])
+  Tweet          Tweet    @relation(fields: [TweetId], references: [Id])
+
+  @@index([AuthorNickname], map: "Comment_AuthorNickname_fkey")
+  @@index([TweetId], map: "Comment_TweetId_fkey")
+}
