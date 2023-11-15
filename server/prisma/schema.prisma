@@ -15,7 +15,8 @@ model dummy {
 
 model User {
   Nickname String    @id @db.VarChar(20)
-  Comment  Comment[]
+  Comments Comment[]
+  Likes    Like[]
   Tweets   Tweet[]
 }
 
@@ -25,9 +26,20 @@ model Tweet {
   Content        String    @db.VarChar(140)
   Date           DateTime
   Comments       Comment[]
+  Liked          Like[]
   Author         User      @relation(fields: [AuthorNickname], references: [Nickname])
 
   @@index([AuthorNickname], map: "Tweet_AuthorNickname_fkey")
+}
+
+model Like {
+  UserNickname String
+  TweetId      Int
+  Tweet        Tweet  @relation(fields: [TweetId], references: [Id])
+  User         User   @relation(fields: [UserNickname], references: [Nickname])
+
+  @@id([UserNickname, TweetId])
+  @@index([TweetId], map: "Like_TweetId_fkey")
 }
 
 model Comment {
@@ -41,4 +53,10 @@ model Comment {
 
   @@index([AuthorNickname], map: "Comment_AuthorNickname_fkey")
   @@index([TweetId], map: "Comment_TweetId_fkey")
+}
+
+model Timeline {
+  Id    Int      @id
+  Title String   @db.VarChar(20)
+  Date  DateTime
 }
