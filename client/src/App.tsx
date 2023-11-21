@@ -1,24 +1,23 @@
 import "./App.css";
 
-import Feed from "./components/Feed";
-import Textarea from "./components/widgets/Textarea";
-import UserInfo from "./components/UserInfo";
-import Calendar from "./components/Calendar";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+
+import FirstPage from "./pages/FirstPage";
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
+import MainPage from "./pages/MainPage";
 
 function App() {
   return (
     <>
-      <div className="container test">
-        <div className="leftContainer test">
-          <UserInfo />
-          <Calendar />
-        </div>
-
-        <div className="rightContainer test">
-          <Feed />
-          <Textarea />
-        </div>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<FirstPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/main" element={<MainPage />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
