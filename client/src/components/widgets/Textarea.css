@@ -1,0 +1,16 @@
+.tweetContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 16px;
+}
+
+div .tweetTextarea {
+  margin: auto;
+  height: 80px;
+  width: 100%;
+}
+
+.tweetButton {
+  text-align: center;
+}
