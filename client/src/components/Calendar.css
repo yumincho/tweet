@@ -1,0 +1,8 @@
+.calendar {
+  font-size: var(--font-size-small);
+  height: fit-content;
+}
+
+.calendar a {
+  color: var(--color-black);
+}

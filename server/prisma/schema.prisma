@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model dummy {
+  number Int     @id
+  type   String? @db.VarChar(3)
+  text   String? @db.Text
+}
+
+model User {
+  nickname String    @id @db.VarChar(20)
+  password String
+  Comments Comment[]
+  Likes    Like[]
+  Tweets   Tweet[]
+}
+
+model Tweet {
+  Id             Int       @id
+  AuthorNickname String    @db.VarChar(20)
+  Content        String    @db.VarChar(140)
+  Date           DateTime
+  Comments       Comment[]
+  Liked          Like[]
+  Author         User      @relation(fields: [AuthorNickname], references: [nickname])
+
+  @@index([AuthorNickname], map: "Tweet_AuthorNickname_fkey")
+}
+
+model Like {
+  UserNickname String
+  TweetId      Int
+  Tweet        Tweet  @relation(fields: [TweetId], references: [Id])
+  User         User   @relation(fields: [UserNickname], references: [nickname])
+
+  @@id([UserNickname, TweetId])
+  @@index([TweetId], map: "Like_TweetId_fkey")
+}
+
+model Comment {
+  Id             Int      @id
+  TweetId        Int
+  AuthorNickname String   @db.VarChar(20)
+  Content        String
+  Date           DateTime
+  Author         User     @relation(fields: [AuthorNickname], references: [nickname])
+  Tweet          Tweet    @relation(fields: [TweetId], references: [Id])
+
+  @@index([AuthorNickname], map: "Comment_AuthorNickname_fkey")
+  @@index([TweetId], map: "Comment_TweetId_fkey")
+}
+
+model Timeline {
+  Id    Int      @id
+  Title String   @db.VarChar(20)
+  Date  DateTime
+}
+
+model Session {
+  Id        String   @id
+  SessionId String   @unique
+  data      String   @db.Text
+  ExpiresAt DateTime
+}
