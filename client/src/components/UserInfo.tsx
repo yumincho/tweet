@@ -30,9 +30,13 @@ const UserInfo = () => {
     asyncFun().catch((e) => window.alert(`AN ERROR OCCURED! ${e}`));
   };
 
+  const userLogin = () => {
+    navigate("/login");
+  };
+
   userNickname();
 
-  return (
+  return nickname ? (
     <div className="containerItem userInfo test">
       <strong>{nickname} 님 🙌 </strong>
       <button
@@ -40,6 +44,16 @@ const UserInfo = () => {
         onClick={userLogout}
       >
         Logout
+      </button>
+    </div>
+  ) : (
+    <div className="containerItem userInfo test">
+      <strong> 로그인이 필요합니다. </strong>
+      <button
+        style={{ fontSize: "var(--font-size-small)" }}
+        onClick={userLogin}
+      >
+        Login
       </button>
     </div>
   );
