@@ -5,6 +5,16 @@ const router = express.Router();
 
 const prisma = new PrismaClient();
 
+const isExistUser = async (nickname: string, password: string) => {
+  const userInfo = await prisma.user.findUnique({
+    where: {
+      nickname: nickname,
+      password: password,
+    },
+  });
+  return userInfo;
+};
+
 router.post("/signup", async (req: any, res: any) => {
   try {
     const { nickname, password } = req.body;
@@ -15,24 +25,6 @@ router.post("/signup", async (req: any, res: any) => {
     return res.status(500).json({ error: e });
   }
 });
-
-router.get("/main", async (req: any, res: any) => {
-  try {
-    res.send("login success");
-  } catch (e) {
-    return res.status(500).json({ error: e });
-  }
-});
-
-const isExistUser = async (nickname: string, password: string) => {
-  const userInfo = await prisma.user.findUnique({
-    where: {
-      nickname: nickname,
-      password: password,
-    },
-  });
-  return userInfo;
-};
 
 router.get("/nickname", async (req: any, res: any) => {
   try {
@@ -88,8 +80,16 @@ router.post("/login", async (req: any, res: any) => {
         });
       }
 
-      /* todo: db에 로그인 여부 저장 */
+      /* todo: db에 로그인 여부 저장? */
     }
+  } catch (e) {
+    return res.status(500).json({ error: e });
+  }
+});
+
+router.get("/isLogin", async (req: any, res: any) => {
+  try {
+    res.send(req.session.user);
   } catch (e) {
     return res.status(500).json({ error: e });
   }
@@ -106,6 +106,7 @@ router.post("/logout", async (req: any, res: any) => {
     } else {
       /* todo */
       console.log("not authorized");
+      res.end();
     }
   } catch (e) {
     return res.status(500).json({ error: e });
