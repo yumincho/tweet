@@ -8,7 +8,17 @@ import UserInfo from "../components/UserInfo";
 import Calendar from "../components/Calendar";
 
 const MainPage = () => {
-  const [tweetCount, setTweetCount] = React.useState<number>(2);
+  const [lastId, setLastId] = React.useState(0);
+  const [tweetCount, setTweetCount] = React.useState<number>(0);
+
+  const getLastId = async () => {
+    const lastId = await axios.get(SAPIBase + "/tweet/lastId");
+    setLastId(lastId.data.Id + 1);
+  };
+
+  getLastId().then(() => {
+    setTweetCount(lastId);
+  });
 
   const [nickname, setNickname] = React.useState("");
   const userNickname = async () => {

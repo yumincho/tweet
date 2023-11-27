@@ -5,6 +5,21 @@ const router = express.Router();
 
 const prisma = new PrismaClient();
 
+/* get id of the last tweet */
+router.get("/lastId", async (req: any, res: any) => {
+  try {
+    const result = await prisma.tweet.findMany({
+      orderBy: {
+        Id: "desc",
+      },
+      take: 1,
+    });
+    res.send(result[0]);
+  } catch (e) {
+    return res.status(500).json({ error: e });
+  }
+});
+
 /* get tweet */
 router.get("", async (req: any, res: any) => {
   try {
