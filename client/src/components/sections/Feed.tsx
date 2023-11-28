@@ -29,15 +29,22 @@ const Feed = () => {
     getFeedFunc();
   };
 
+  /* track if the user add new tweet */
   React.useEffect(getFeed, [tweetCount]);
 
+  /* get user nickname from the context */
   const { nickname } = useContext(UserInfoContext);
 
   return (
     <div className="feedContainer">
       {feedData.map(({ Id, AuthorNickname, Content, Date }) => (
         <div key={Id}>
-          <Tweet author={AuthorNickname} content={Content} date={Date} />
+          <Tweet
+            id={Id}
+            author={AuthorNickname}
+            content={Content}
+            date={Date}
+          />
         </div>
       ))}
       nickname: {nickname}

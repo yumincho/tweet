@@ -5,19 +5,16 @@ const router = express.Router();
 
 const prisma = new PrismaClient();
 
-router.get("/dummy", async (req: any, res: any) => {
-  try {
-    /* todo */
-    res.send("dummy");
-  } catch (e) {
-    return res.status(500).json({ error: e });
-  }
-});
-
 router.get("", async (req: any, res: any) => {
   try {
     /* todo */
-    res.send("todo");
+    const { TweetId } = req.query;
+    const result = await prisma.comment.findMany({
+      where: {
+        TweetId: parseInt(TweetId), // need to parse into Int
+      },
+    });
+    res.send(result);
   } catch (e) {
     return res.status(500).json({ error: e });
   }

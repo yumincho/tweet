@@ -27,7 +27,7 @@ function App() {
             }
           />
           <Route
-            path="/"
+            path="/:id"
             element={
               <MainPage>
                 <TweetFeed />
