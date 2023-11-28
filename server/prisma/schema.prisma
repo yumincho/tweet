@@ -22,7 +22,7 @@ model User {
 }
 
 model Tweet {
-  Id             Int       @id
+  Id             Int       @id @default(autoincrement())
   AuthorNickname String    @db.VarChar(20)
   Content        String    @db.VarChar(140)
   Date           DateTime

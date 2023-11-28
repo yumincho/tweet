@@ -5,7 +5,7 @@ const router = express.Router();
 
 const prisma = new PrismaClient();
 
-/* get id of the last tweet */
+/* DEPRECATED: get id of the last tweet */
 router.get("/lastId", async (req: any, res: any) => {
   try {
     const result = await prisma.tweet.findMany({
@@ -42,10 +42,9 @@ router.get("", async (req: any, res: any) => {
 router.post("", async (req: any, res: any) => {
   try {
     /* todo */
-    const { Id, AuthorNickname, Content } = req.body;
+    const { AuthorNickname, Content } = req.body;
     const result = await prisma.tweet.create({
       data: {
-        Id: Id,
         AuthorNickname: AuthorNickname,
         Content: Content,
         Date: new Date(),
