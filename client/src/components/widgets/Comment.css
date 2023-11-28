@@ -1,0 +1,37 @@
+.commentBox {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+
+  border-radius: 10px;
+  border: var(--color-gray-200) 1px solid;
+}
+
+.commentData {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+div .commentDate {
+  margin: 0px;
+  padding: 0px;
+
+  font-size: var(--font-size-small);
+  color: var(--color-gray-500);
+}
+
+div .commentContent {
+  margin: 0px;
+  padding: 0px;
+
+  font-size: var(--font-size-default);
+}
+
+.commentAuthor {
+  margin: 0px;
+  padding: 0px;
+
+  font-size: var(--font-size-small);
+  color: var(--color-black);
+}

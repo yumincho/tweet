@@ -6,7 +6,7 @@ import { useContext } from "react";
 import axios from "axios";
 import { SAPIBase } from "../../tools/api";
 
-import Tweet from "../Tweet";
+import Tweet from "../widgets/Tweet";
 import Textarea from "../widgets/Textarea";
 import UserInfoContext from "../contexts/userInfoContext";
 

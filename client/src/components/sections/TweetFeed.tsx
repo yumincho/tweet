@@ -2,12 +2,12 @@ import "./TweetFeed.css";
 
 import React from "react";
 import { useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
 import { SAPIBase } from "../../tools/api";
 
-import Tweet from "../Tweet";
+import Comment from "../widgets/Comment";
 import Textarea from "../widgets/Textarea";
 import UserInfoContext from "../contexts/userInfoContext";
 
@@ -45,11 +45,19 @@ const TweetFeed = () => {
   /* get user nickname from the context */
   const { nickname } = useContext(UserInfoContext);
 
+  /* navigation */
+  const navigate = useNavigate();
+
+  const onBackClick = () => {
+    navigate("/main");
+  };
+
   return (
     <div className="feedContainer">
+      <button onClick={onBackClick}>Back to main</button>
       {tweetFeedData.map(({ Id, AuthorNickname, Content, Date }) => (
         <div key={Id}>
-          <Tweet
+          <Comment
             id={Id}
             author={AuthorNickname}
             content={Content}
