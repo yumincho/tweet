@@ -15,7 +15,6 @@ const Textarea = ({ nickname, tweetCount, setTweetCount }: Props) => {
 
   const addTweet = async () => {
     await axios.post(SAPIBase + "/tweet", {
-      Id: tweetCount,
       AuthorNickname: nickname,
       Content: content,
     });

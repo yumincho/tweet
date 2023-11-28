@@ -50,6 +50,8 @@ router.post("", async (req: any, res: any) => {
         Date: new Date(),
       },
     });
+    console.log(result);
+
     res.send(result);
   } catch (e) {
     return res.status(500).json({ error: e });

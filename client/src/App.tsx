@@ -7,6 +7,9 @@ import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
 
+import Feed from "./components/sections/Feed";
+import TweetFeed from "./components/sections/TweetFeed";
+
 function App() {
   return (
     <>
@@ -15,7 +18,22 @@ function App() {
           <Route path="/" element={<FirstPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/main" element={<MainPage />} />
+          <Route
+            path="/main"
+            element={
+              <MainPage>
+                <Feed />
+              </MainPage>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <MainPage>
+                <TweetFeed />
+              </MainPage>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </>

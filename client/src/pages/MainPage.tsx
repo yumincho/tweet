@@ -1,51 +1,38 @@
 import React from "react";
+// import { useContext } from "react";
 import axios from "axios";
 import { SAPIBase } from "../tools/api";
 
-import Feed from "../components/Feed";
-import Textarea from "../components/widgets/Textarea";
+// import Textarea from "../components/widgets/Textarea";
 import UserInfo from "../components/UserInfo";
-import Calendar from "../components/Calendar";
+import Calendar from "../components/widgets/Calendar";
+import UserInfoContext from "../components/contexts/userInfoContext";
 
-const MainPage = () => {
-  // const [lastId, setLastId] = React.useState(0);
-  const [tweetCount, setTweetCount] = React.useState<number>(0);
+interface ChildrenProps {
+  children: JSX.Element;
+}
 
-  // const getLastId = async () => {
-  //   const lastId = await axios.get(SAPIBase + "/tweet/lastId");
-  //   setLastId(lastId.data.Id + 1);
-  // };
+const MainPage: React.FC<ChildrenProps> = ({ children }) => {
+  const [loginUserNickanme, setLoginUserNickname] = React.useState("");
 
-  // getLastId().then(() => {
-  //   setTweetCount(lastId);
-  // });
-
-  const [nickname, setNickname] = React.useState("");
   const userNickname = async () => {
     const userNickname = await axios.get(SAPIBase + "/auth/nickname");
-    setNickname(userNickname.data);
+    setLoginUserNickname(userNickname.data);
   };
 
   userNickname();
 
   return (
-    <>
+    <UserInfoContext.Provider value={{ nickname: loginUserNickanme }}>
       <div className="container test">
         <div className="leftContainer test">
           <UserInfo />
           <Calendar />
         </div>
 
-        <div className="rightContainer">
-          <Feed tweetCount={tweetCount} />
-          <Textarea
-            nickname={nickname}
-            tweetCount={tweetCount}
-            setTweetCount={setTweetCount}
-          />
-        </div>
+        <div className="rightContainer">{children}</div>
       </div>
-    </>
+    </UserInfoContext.Provider>
   );
 };
 
