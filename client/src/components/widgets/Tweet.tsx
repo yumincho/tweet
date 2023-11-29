@@ -16,6 +16,9 @@ const Tweet = ({ id, author, content, date }: Props) => {
     navigate(`/tweet/${id}`, {
       state: {
         tweetId: id,
+        tweetAuthor: author,
+        tweetContent: content,
+        tweetDate: date,
       },
     });
   };

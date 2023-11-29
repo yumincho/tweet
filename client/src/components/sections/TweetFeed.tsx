@@ -10,6 +10,7 @@ import { SAPIBase } from "../../tools/api";
 import Comment from "../widgets/Comment";
 import Textarea from "../widgets/Textarea";
 import UserInfoContext from "../contexts/userInfoContext";
+import OwnerTweet from "../widgets/OwnerTweet";
 
 interface TweetFeedData {
   Id: number;
@@ -24,7 +25,7 @@ const TweetFeed = () => {
 
   /* get tweetId from URL */
   const { state } = useLocation();
-  const { tweetId } = state;
+  const { tweetId, tweetAuthor, tweetContent, tweetDate } = state;
 
   /* get info of the tweet */
   const getTweetFeed = () => {
@@ -55,6 +56,15 @@ const TweetFeed = () => {
   return (
     <div className="feedContainer">
       <button onClick={onBackClick}>Back to main</button>
+      {/* main tweet */}
+      <OwnerTweet
+        id={tweetId}
+        author={tweetAuthor}
+        content={tweetContent}
+        date={tweetDate}
+        tweetFeedData={tweetFeedData}
+      />
+      {/* comments */}
       {tweetFeedData.map(({ Id, AuthorNickname, Content, Date }) => (
         <div key={Id}>
           <Comment
