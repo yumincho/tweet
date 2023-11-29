@@ -5,15 +5,12 @@ import { SAPIBase } from "../tools/api";
 
 import "./UserInfo.css";
 
-const UserInfo = () => {
-  const [nickname, setNickname] = React.useState("");
+interface Props {
+  nickname: string;
+}
 
+const UserInfo: React.FC<Props> = ({ nickname }) => {
   const navigate = useNavigate();
-
-  const userNickname = async () => {
-    const userNickname = await axios.get(SAPIBase + "/auth/nickname");
-    setNickname(userNickname.data);
-  };
 
   const userLogout = () => {
     const asyncFun = async () => {
@@ -33,8 +30,6 @@ const UserInfo = () => {
   const userLogin = () => {
     navigate("/login");
   };
-
-  userNickname();
 
   return nickname ? (
     <div className="containerItem userInfo test">
