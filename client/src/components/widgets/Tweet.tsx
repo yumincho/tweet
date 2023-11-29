@@ -13,7 +13,7 @@ const Tweet = ({ id, author, content, date }: Props) => {
   const navigate = useNavigate();
 
   const onTweetBoxClick = () => {
-    navigate(`/${id}`, {
+    navigate(`/tweet/${id}`, {
       state: {
         tweetId: id,
       },
