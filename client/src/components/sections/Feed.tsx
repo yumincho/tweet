@@ -36,24 +36,25 @@ const Feed = () => {
   const { nickname } = useContext(UserInfoContext);
 
   return (
-    <div className="feedContainer">
-      {feedData.map(({ Id, AuthorNickname, Content, Date }) => (
-        <div key={Id}>
-          <Tweet
-            id={Id}
-            author={AuthorNickname}
-            content={Content}
-            date={Date}
-          />
-        </div>
-      ))}
-      nickname: {nickname}
+    <>
+      <div className="feedContainer">
+        {feedData.map(({ Id, AuthorNickname, Content, Date }) => (
+          <div key={Id}>
+            <Tweet
+              id={Id}
+              author={AuthorNickname}
+              content={Content}
+              date={Date}
+            />
+          </div>
+        ))}
+      </div>
       <Textarea
         nickname={nickname}
         tweetCount={tweetCount}
         setTweetCount={setTweetCount}
       />
-    </div>
+    </>
   );
 };
 

@@ -28,7 +28,11 @@ router.post("/signup", async (req: any, res: any) => {
 
 router.get("/nickname", async (req: any, res: any) => {
   try {
-    res.send(req.session.user.nickname);
+    if (req.session.user) {
+      res.send(req.session.user.nickname);
+    } else {
+      res.send("");
+    }
   } catch (e) {
     return res.status(500).json({ error: e });
   }

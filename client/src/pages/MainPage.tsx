@@ -19,7 +19,6 @@ const MainPage: React.FC<ChildrenProps> = ({ children }) => {
     const userNickname = async () => {
       const userNickname = await axios.get(SAPIBase + "/auth/nickname");
       setLoginUserNickname(userNickname.data);
-      console.log("mainpage usernick: ", userNickname);
     };
     userNickname();
   };
@@ -29,7 +28,7 @@ const MainPage: React.FC<ChildrenProps> = ({ children }) => {
   return (
     <UserInfoContext.Provider value={{ nickname: loginUserNickname }}>
       <div className="container test">
-        <div className="leftContainer test">
+        <div className="leftContainer">
           <UserInfo nickname={loginUserNickname} />
           <Calendar />
         </div>

@@ -31,7 +31,7 @@ const UserInfo: React.FC<Props> = ({ nickname }) => {
     navigate("/login");
   };
 
-  return nickname ? (
+  return nickname !== "" ? (
     <div className="containerItem userInfo test">
       <strong>{nickname} 님 🙌 </strong>
       <button
