@@ -41,7 +41,7 @@ const Feed = () => {
   const getFeed = () => {
     const getFeedFunc = async () => {
       const { data } = await axios.get(SAPIBase + "/tweet");
-      setFeedData(data);
+      setFeedData(data.reverse());
     };
     getFeedFunc();
   };
@@ -51,7 +51,7 @@ const Feed = () => {
 
   return (
     <>
-      <div className="feedContainer">
+      <div className="feedList test">
         {feedData.map(({ Id, AuthorNickname, Content, Date }) => (
           <div key={Id}>
             <Tweet

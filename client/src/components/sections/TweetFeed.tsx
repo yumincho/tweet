@@ -68,7 +68,7 @@ const TweetFeed = () => {
   };
 
   return (
-    <div className="feedContainer">
+    <>
       <button onClick={onBackClick}>Back to main</button>
       {/* main tweet */}
       <OwnerTweet
@@ -78,18 +78,22 @@ const TweetFeed = () => {
         date={tweetDate}
         tweetFeedData={tweetFeedData}
       />
-      {tweetFeedData.map(({ Id, AuthorNickname, Content, Date }) => (
-        <div key={Id}>
-          <Comment
-            id={Id}
-            author={AuthorNickname}
-            content={Content}
-            date={Date}
-          />
-        </div>
-      ))}
+      {/* comments */}
+      <div className="tweetFeed">
+        {tweetFeedData.map(({ Id, AuthorNickname, Content, Date }) => (
+          <div key={Id}>
+            <Comment
+              id={Id}
+              author={AuthorNickname}
+              content={Content}
+              date={Date}
+            />
+          </div>
+        ))}
+      </div>
+      {/* text input field */}
       <Textarea content={content} setContent={setContent} addOne={addComment} />
-    </div>
+    </>
   );
 };
 
