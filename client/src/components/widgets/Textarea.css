@@ -5,12 +5,21 @@
   gap: 16px;
 }
 
-div .tweetTextarea {
+.tweetTextarea {
   margin: auto;
   height: 80px;
   width: 100%;
 }
 
+.error {
+  border: 1px solid red;
+}
+
 .tweetButton {
   text-align: center;
+}
+
+.tweetButton:disabled {
+  opacity: 0.5;
+  color: var(--color-gray-500);
 }

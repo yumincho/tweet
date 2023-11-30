@@ -33,6 +33,8 @@ div .tweetContent {
   margin: 0px;
   padding: 0px;
 
+  line-break: anywhere;
+
   font-size: var(--font-size-default);
 }
 

@@ -12,6 +12,7 @@ interface Props {
 
 const Textarea = ({ nickname, tweetCount, setTweetCount }: Props) => {
   const [content, setContent] = React.useState("");
+  const [isValidLength, setIsValidLength] = React.useState(true);
 
   const addTweet = async () => {
     await axios.post(SAPIBase + "/tweet", {
@@ -21,18 +22,36 @@ const Textarea = ({ nickname, tweetCount, setTweetCount }: Props) => {
     setContent("");
     setTweetCount(tweetCount + 1);
   };
+
+  const checkTweet = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length > 140) {
+      setIsValidLength(false);
+    } else {
+      setIsValidLength(true);
+    }
+  };
   return (
     <>
       {/* <span className="tweetAuthor">작성자 | {nickname}</span>  */}
       <div className="tweetContainer">
         <textarea
-          className="tweetTextarea"
+          className={`tweetTextarea ${isValidLength ? "" : "error"}`}
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => {
+            checkTweet(e);
+            setContent(e.target.value);
+          }}
         />
-        <button className="tweetButton" onClick={addTweet}>
-          ↩︎
-        </button>
+        <div>
+          <span>{content.length} / 140</span>
+          <button
+            disabled={!isValidLength}
+            className="tweetButton"
+            onClick={addTweet}
+          >
+            ↩︎
+          </button>
+        </div>
       </div>
     </>
   );
