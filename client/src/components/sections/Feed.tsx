@@ -19,8 +19,25 @@ interface TweetData {
 
 const Feed = () => {
   const [feedData, setFeedData] = React.useState<TweetData[]>([]);
-  const [tweetCount, setTweetCount] = React.useState(0);
+  const [count, setCount] = React.useState(0);
 
+  /* manage content from textarea */
+  const [content, setContent] = React.useState("");
+
+  /* get user nickname from the context */
+  const { nickname } = useContext(UserInfoContext);
+
+  /* api call when the user add new tweet */
+  const addTweet = async () => {
+    await axios.post(SAPIBase + "/tweet", {
+      AuthorNickname: nickname,
+      Content: content,
+    });
+    setContent("");
+    setCount(count + 1);
+  };
+
+  /* reload feed when the user add new tweet */
   const getFeed = () => {
     const getFeedFunc = async () => {
       const { data } = await axios.get(SAPIBase + "/tweet");
@@ -30,10 +47,7 @@ const Feed = () => {
   };
 
   /* track if the user add new tweet */
-  React.useEffect(getFeed, [tweetCount]);
-
-  /* get user nickname from the context */
-  const { nickname } = useContext(UserInfoContext);
+  React.useEffect(getFeed, [count]);
 
   return (
     <>
@@ -49,11 +63,7 @@ const Feed = () => {
           </div>
         ))}
       </div>
-      <Textarea
-        nickname={nickname}
-        tweetCount={tweetCount}
-        setTweetCount={setTweetCount}
-      />
+      <Textarea content={content} setContent={setContent} addOne={addTweet} />
     </>
   );
 };

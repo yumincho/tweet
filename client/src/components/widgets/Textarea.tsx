@@ -1,27 +1,15 @@
 import React from "react";
-import axios from "axios";
-import { SAPIBase } from "../../tools/api";
 
 import "./Textarea.css";
 
 interface Props {
-  nickname: string;
-  tweetCount: number;
-  setTweetCount: React.Dispatch<React.SetStateAction<number>>;
+  content: string;
+  setContent: React.Dispatch<React.SetStateAction<string>>;
+  addOne: () => Promise<void>;
 }
 
-const Textarea = ({ nickname, tweetCount, setTweetCount }: Props) => {
-  const [content, setContent] = React.useState("");
+const Textarea = ({ content, setContent, addOne }: Props) => {
   const [isValidLength, setIsValidLength] = React.useState(true);
-
-  const addTweet = async () => {
-    await axios.post(SAPIBase + "/tweet", {
-      AuthorNickname: nickname,
-      Content: content,
-    });
-    setContent("");
-    setTweetCount(tweetCount + 1);
-  };
 
   const checkTweet = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 140) {
@@ -47,7 +35,7 @@ const Textarea = ({ nickname, tweetCount, setTweetCount }: Props) => {
           <button
             disabled={!isValidLength}
             className="tweetButton"
-            onClick={addTweet}
+            onClick={addOne}
           >
             ↩︎
           </button>

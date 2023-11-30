@@ -21,13 +21,30 @@ interface TweetFeedData {
 
 const TweetFeed = () => {
   const [tweetFeedData, setTweetFeedData] = React.useState<TweetFeedData[]>([]);
-  const [commentCount, setCommentCount] = React.useState(0);
+  const [count, setCount] = React.useState(0);
 
   /* get tweetId from URL */
   const { state } = useLocation();
   const { tweetId, tweetAuthor, tweetContent, tweetDate } = state;
 
-  /* get info of the tweet */
+  /* manage content from textarea */
+  const [content, setContent] = React.useState("");
+
+  /* get user nickname from the context */
+  const { nickname } = useContext(UserInfoContext);
+
+  /* api call when the user add new comment */
+  const addComment = async () => {
+    await axios.post(SAPIBase + "/comment", {
+      TweetId: tweetId,
+      AuthorNickname: nickname,
+      Content: content,
+    });
+    setContent("");
+    setCount(count + 1);
+  };
+
+  /* reload feed when the user add new tweet */
   const getTweetFeed = () => {
     const getFeedFunc = async () => {
       const { data } = await axios.get(SAPIBase + "/comment", {
@@ -41,10 +58,7 @@ const TweetFeed = () => {
   };
 
   /* track if the user add new comment */
-  React.useEffect(getTweetFeed, [commentCount, tweetId]);
-
-  /* get user nickname from the context */
-  const { nickname } = useContext(UserInfoContext);
+  React.useEffect(getTweetFeed, [count, tweetId]);
 
   /* navigation */
   const navigate = useNavigate();
@@ -64,7 +78,6 @@ const TweetFeed = () => {
         date={tweetDate}
         tweetFeedData={tweetFeedData}
       />
-      {/* comments */}
       {tweetFeedData.map(({ Id, AuthorNickname, Content, Date }) => (
         <div key={Id}>
           <Comment
@@ -75,11 +88,7 @@ const TweetFeed = () => {
           />
         </div>
       ))}
-      <Textarea
-        nickname={nickname}
-        tweetCount={commentCount}
-        setTweetCount={setCommentCount}
-      />
+      <Textarea content={content} setContent={setContent} addOne={addComment} />
     </div>
   );
 };

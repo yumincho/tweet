@@ -44,7 +44,7 @@ model Like {
 }
 
 model Comment {
-  Id             Int      @id
+  Id             Int      @id @default(autoincrement())
   TweetId        Int
   AuthorNickname String   @db.VarChar(20)
   Content        String
