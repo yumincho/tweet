@@ -67,6 +67,46 @@ const TweetFeed = () => {
     navigate("/main");
   };
 
+  /* manage likes */
+  const [like, setLike] = React.useState(false);
+  const [countComments, setCountComments] = React.useState(0);
+
+  // check the number of likes
+  const checkLike = () => {
+    const checkLikeFunc = async () => {
+      const result = await axios.get(SAPIBase + "/tweet/like", {
+        params: {
+          UserNickname: nickname,
+          TweetId: tweetId,
+        },
+      });
+
+      setLike(result.data[0]);
+      setCountComments(result.data[1]);
+    };
+    checkLikeFunc();
+  };
+
+  React.useEffect(checkLike, [nickname, tweetId, like]);
+
+  const clickLike = async () => {
+    await axios.post(SAPIBase + "/tweet/like", {
+      UserNickname: nickname,
+      TweetId: tweetId,
+    });
+    setLike(true);
+  };
+
+  const clickDislike = async () => {
+    await axios.delete(SAPIBase + "/tweet/like", {
+      data: {
+        UserNickname: nickname,
+        TweetId: tweetId,
+      },
+    });
+    setLike(false);
+  };
+
   return (
     <>
       <button onClick={onBackClick}>Back to main</button>
@@ -77,6 +117,10 @@ const TweetFeed = () => {
         content={tweetContent}
         date={tweetDate}
         tweetFeedData={tweetFeedData}
+        clickLike={clickLike}
+        clickDislike={clickDislike}
+        like={like}
+        countComments={countComments}
       />
       {/* comments */}
       <div className="tweetFeed">

@@ -67,10 +67,41 @@ router.delete("", async (req: any, res: any) => {
   }
 });
 
+/* check if the user liked the ownerTweet */
+router.get("/like", async (req: any, res: any) => {
+  try {
+    const { UserNickname, TweetId } = req.query;
+
+    const userLiked = await prisma.like.findMany({
+      where: {
+        UserNickname: UserNickname,
+        TweetId: parseInt(TweetId),
+      },
+    });
+
+    const likeCount = await prisma.like.findMany({
+      where: {
+        TweetId: parseInt(TweetId),
+      },
+    });
+
+    res.send([userLiked.length === 1, likeCount.length]);
+  } catch (e) {
+    return res.status(500).json({ error: e });
+  }
+});
+
 router.post("/like", async (req: any, res: any) => {
   try {
-    /* todo */
-    res.send("todo");
+    const { UserNickname, TweetId } = req.body;
+
+    const result = await prisma.like.create({
+      data: {
+        UserNickname: UserNickname,
+        TweetId: TweetId,
+      },
+    });
+    res.send(result);
   } catch (e) {
     return res.status(500).json({ error: e });
   }
@@ -78,8 +109,15 @@ router.post("/like", async (req: any, res: any) => {
 
 router.delete("/like", async (req: any, res: any) => {
   try {
-    /* todo */
-    res.send("todo");
+    const { UserNickname, TweetId } = req.body;
+
+    const result = await prisma.like.deleteMany({
+      where: {
+        UserNickname: UserNickname,
+        TweetId: TweetId,
+      },
+    });
+    res.send(result);
   } catch (e) {
     return res.status(500).json({ error: e });
   }

@@ -8,7 +8,6 @@ const prisma = new PrismaClient();
 /* get comments */
 router.get("", async (req: any, res: any) => {
   try {
-    /* todo */
     const { TweetId } = req.query;
     const result = await prisma.comment.findMany({
       where: {
@@ -24,9 +23,7 @@ router.get("", async (req: any, res: any) => {
 /* add comment */
 router.post("", async (req: any, res: any) => {
   try {
-    /* todo */
     const { TweetId, AuthorNickname, Content } = req.body;
-    console.log("comment info: ", TweetId, AuthorNickname, Content);
     const result = await prisma.comment.create({
       data: {
         // Id: 0, // autoincremented

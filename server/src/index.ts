@@ -44,7 +44,7 @@ const corsOptions = {
     if (!origin || whitelist.indexOf(origin) !== -1) callback(null, true);
     else callback(new Error("Not Allowed by CORS"));
   },
-  methods: ["GET", "POST", "OPTIONS"],
+  methods: ["GET", "POST", "OPTIONS", "DELETE"],
   credentials: true,
 };
 

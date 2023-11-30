@@ -1,5 +1,5 @@
 import "./OwnerTweet.css";
-import { IoChatbubbleOutline } from "react-icons/io5";
+import { IoChatbubbleOutline, IoFlash, IoFlashOutline } from "react-icons/io5";
 
 interface TweetFeedData {
   Id: number;
@@ -7,15 +7,28 @@ interface TweetFeedData {
   Content: string;
   Date: string;
 }
-interface Props {
+interface OwnerTweetProps {
   id: number;
   author: string;
   content: string;
   date: string;
   tweetFeedData: TweetFeedData[];
+  clickLike: () => Promise<void>;
+  clickDislike: () => Promise<void>;
+  like: boolean;
+  countComments: number;
 }
 
-const OwnerTweet = ({ author, content, date, tweetFeedData }: Props) => {
+const OwnerTweet = ({
+  author,
+  content,
+  date,
+  tweetFeedData,
+  clickLike,
+  clickDislike,
+  like,
+  countComments,
+}: OwnerTweetProps) => {
   return (
     <>
       <div className="ownerTweetBox">
@@ -26,9 +39,20 @@ const OwnerTweet = ({ author, content, date, tweetFeedData }: Props) => {
         <p className={"ownerTweetContent"}>{content}</p>
       </div>
       <div className="ownerTweetInfo">
-        <span>
-          <IoChatbubbleOutline />
+        <span className="iconAndFigure">
+          <IoChatbubbleOutline size="20" />
           {tweetFeedData.length}
+        </span>
+        <span
+          className="iconAndFigure"
+          onClick={like ? clickDislike : clickLike}
+        >
+          {like ? (
+            <IoFlash size="20" color="var(--color-main-orange)" />
+          ) : (
+            <IoFlashOutline size="20" />
+          )}
+          {countComments}
         </span>
       </div>
     </>
