@@ -27,13 +27,13 @@ const MainPage: React.FC<ChildrenProps> = ({ children }) => {
 
   return (
     <UserInfoContext.Provider value={{ nickname: loginUserNickname }}>
-      <div className="container test">
-        <div className="leftContainer">
+      <div className="container">
+        <div className="leftContainer test">
           <UserInfo nickname={loginUserNickname} />
           <Calendar />
         </div>
 
-        <div className="rightContainer">{children}</div>
+        <div className="rightContainer test">{children}</div>
       </div>
     </UserInfoContext.Provider>
   );

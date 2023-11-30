@@ -30,16 +30,18 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 10px;
 
   width: 1200px;
-  height: 90vh;
 }
 
 .leftContainer {
-  display: grid;
-  grid-template-rows: 1fr 2fr;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+
+  border-right: 1px solid var(--color-gray-200);
+  /* padding: 10px; */
+
+  justify-content: space-between;
 }
 
 .rightContainer {
@@ -47,8 +49,10 @@
 
   display: flex;
   flex-direction: column;
-
   gap: 10px;
+
+  height: 90vh;
+  /* padding: 10px; */
 }
 
 .containerItem {
@@ -56,6 +60,5 @@
 }
 
 .test {
-  border: 1px solid black;
-  padding: 10px;
+  /* border: 1px solid black; */
 }

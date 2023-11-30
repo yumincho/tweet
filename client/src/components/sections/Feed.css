@@ -3,10 +3,7 @@
   flex-direction: column;
   gap: 12px;
 
-  border: 1px solid black;
+  overflow: scroll;
 
-  padding: 16px;
-
-  width: auto;
-  height: 100%;
+  padding: 0 24px 16px 24px;
 }
