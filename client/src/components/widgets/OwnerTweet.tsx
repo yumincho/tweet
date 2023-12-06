@@ -38,7 +38,7 @@ const OwnerTweet = ({
         </div>
         <p className={"ownerTweetContent"}>{content}</p>
       </div>
-      <div className="ownerTweetInfo">
+      <div className="ownerTweetCountInfo">
         <span className="iconAndFigure">
           <IoChatbubbleOutline size="20" />
           {tweetFeedData.length}
@@ -48,9 +48,13 @@ const OwnerTweet = ({
           onClick={like ? clickDislike : clickLike}
         >
           {like ? (
-            <IoFlash size="20" color="var(--color-main-orange)" />
+            <IoFlash
+              className="icon"
+              size="20"
+              color="var(--color-main-orange)"
+            />
           ) : (
-            <IoFlashOutline size="20" />
+            <IoFlashOutline className="icon" size="20" />
           )}
           {countComments}
         </span>

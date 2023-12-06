@@ -45,3 +45,10 @@ div .tweetContent {
   font-size: var(--font-size-small);
   color: var(--color-black);
 }
+
+.tweetCountInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  padding: 16px 0 0 0;
+}
