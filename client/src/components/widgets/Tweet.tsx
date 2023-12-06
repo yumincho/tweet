@@ -75,25 +75,27 @@ const Tweet = ({
         </div>
         <p className={"tweetContent"}>{content}</p>
         <div className="tweetCountInfo">
-          <span className="iconAndFigure">
-            <IoChatbubbleOutline size="20" />
+          <div className="iconAndFigure">
+            <IoChatbubbleOutline className="noHoverIcon" size="20" />
             {comments}
-          </span>
-          <span
-            className="iconAndFigure"
-            onClick={like ? clickDislike : clickLike}
-          >
-            {userLike ? (
-              <IoFlash
-                className="icon"
-                size="20"
-                color="var(--color-main-orange)"
-              />
-            ) : (
-              <IoFlashOutline className="icon" size="20" />
-            )}
-            {likes}
-          </span>
+          </div>
+          <div>
+            <button
+              className="iconAndFigure hoverAction"
+              onClick={like ? clickDislike : clickLike}
+            >
+              {like ? (
+                <IoFlash
+                  className="icon"
+                  size="20"
+                  color="var(--color-main-orange)"
+                />
+              ) : (
+                <IoFlashOutline className="icon" size="20" />
+              )}
+              <span className="text">{likesCount}</span>
+            </button>
+          </div>
         </div>
       </div>
     </>

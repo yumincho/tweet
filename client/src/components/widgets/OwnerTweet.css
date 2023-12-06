@@ -51,11 +51,19 @@ div .ownerTweetContent {
   cursor: pointer;
 }
 
+.noHoverIcon {
+  padding: 4px;
+}
+
 .icon {
   padding: 4px;
 }
 
-.icon:hover {
+.hoverAction:hover > .text {
+  color: var(--color-main-orange);
+}
+
+.hoverAction:hover > .icon {
   padding: 4px;
   transform: scale(1.2);
   transition-duration: 0.2s;
