@@ -23,8 +23,11 @@ router.get("/lastId", async (req: any, res: any) => {
 /* get tweet */
 router.get("", async (req: any, res: any) => {
   try {
-    /* todo */
-    const result = await prisma.tweet.findMany({
+    /* get userNickname to check if the user liked each tweet */
+    const { userNickname } = req.query;
+
+    /* find tweets */
+    const tweets = await prisma.tweet.findMany({
       select: {
         Id: true,
         AuthorNickname: true,
@@ -32,6 +35,38 @@ router.get("", async (req: any, res: any) => {
         Date: true,
       },
     });
+
+    /* count the number of comments and likes*/
+    const result = await Promise.all(
+      tweets.map(async (tweet, index) => {
+        const comments = await prisma.comment.findMany({
+          where: {
+            TweetId: tweet.Id,
+          },
+        });
+        const likes = await prisma.like.findMany({
+          where: {
+            TweetId: tweet.Id,
+          },
+        });
+        const userLike = await prisma.like.findMany({
+          where: {
+            UserNickname: userNickname,
+            TweetId: tweet.Id,
+          },
+        });
+        return {
+          Id: tweet.Id,
+          AuthorNickname: tweet.AuthorNickname,
+          Content: tweet.Content,
+          Date: tweet.Date,
+          Comments: comments.length,
+          Likes: likes.length,
+          UserLike: userLike.length >= 1,
+        };
+      })
+    );
+
     res.send(result);
   } catch (e) {
     return res.status(500).json({ error: e });
@@ -50,7 +85,6 @@ router.post("", async (req: any, res: any) => {
         Date: new Date(),
       },
     });
-    console.log(result);
 
     res.send(result);
   } catch (e) {

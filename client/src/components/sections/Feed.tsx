@@ -15,6 +15,9 @@ interface TweetData {
   AuthorNickname: string;
   Content: string;
   Date: string;
+  Comments: number;
+  Likes: number;
+  UserLike: boolean;
 }
 
 const Feed = () => {
@@ -40,28 +43,45 @@ const Feed = () => {
   /* reload feed when the user add new tweet */
   const getFeed = () => {
     const getFeedFunc = async () => {
-      const { data } = await axios.get(SAPIBase + "/tweet");
+      const { data } = await axios.get(SAPIBase + "/tweet", {
+        params: {
+          userNickname: nickname,
+        },
+      });
       setFeedData(data.reverse());
     };
     getFeedFunc();
   };
 
   /* track if the user add new tweet */
-  React.useEffect(getFeed, [count]);
+  React.useEffect(getFeed, [nickname, count]);
 
   return (
     <>
       <div className="feedList test">
-        {feedData.map(({ Id, AuthorNickname, Content, Date }) => (
-          <div key={Id}>
-            <Tweet
-              id={Id}
-              author={AuthorNickname}
-              content={Content}
-              date={Date}
-            />
-          </div>
-        ))}
+        {feedData.map(
+          ({
+            Id,
+            AuthorNickname,
+            Content,
+            Date,
+            Comments,
+            Likes,
+            UserLike,
+          }) => (
+            <div key={Id}>
+              <Tweet
+                id={Id}
+                author={AuthorNickname}
+                content={Content}
+                date={Date}
+                comments={Comments}
+                likes={Likes}
+                userLike={UserLike}
+              />
+            </div>
+          )
+        )}
       </div>
       <Textarea content={content} setContent={setContent} addOne={addTweet} />
     </>
