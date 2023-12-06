@@ -47,22 +47,29 @@ const Tweet = ({
   const { nickname } = useContext(UserInfoContext);
 
   const [like, setLike] = React.useState(userLike);
+  const [likesCount, setLikesCount] = React.useState(likes); // not fetch data from db in real, but show as it does
+  const clickLike = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    /* prevent navigate to ownerTweet */
+    e.stopPropagation();
 
-  const clickLike = async () => {
+    /* update userLike info */
     await axios.post(SAPIBase + "/tweet/like", {
       UserNickname: nickname,
       TweetId: id,
     });
+    setLikesCount((curr) => curr + 1);
     setLike(true);
   };
 
-  const clickDislike = async () => {
+  const clickDislike = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     await axios.delete(SAPIBase + "/tweet/like", {
       data: {
         UserNickname: nickname,
         TweetId: id,
       },
     });
+    setLikesCount((curr) => curr - 1);
     setLike(false);
   };
 
