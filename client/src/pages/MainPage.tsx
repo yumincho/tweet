@@ -4,7 +4,7 @@ import axios from "axios";
 import { SAPIBase } from "../tools/api";
 
 // import Textarea from "../components/widgets/Textarea";
-import UserInfo from "../components/UserInfo";
+import UserInfo from "../components/sections/UserInfo";
 import Calendar from "../components/widgets/Calendar";
 import UserInfoContext from "../components/contexts/userInfoContext";
 

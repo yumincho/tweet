@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { SAPIBase } from "../tools/api";
+import { SAPIBase } from "../../tools/api";
 
 import "./UserInfo.css";
 
