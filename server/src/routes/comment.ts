@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import dayjs from "dayjs";
 
 const router = express.Router();
 
@@ -9,10 +10,20 @@ const prisma = new PrismaClient();
 router.get("", async (req: any, res: any) => {
   try {
     const { TweetId } = req.query;
-    const result = await prisma.comment.findMany({
+    const comments = await prisma.comment.findMany({
       where: {
         TweetId: parseInt(TweetId), // need to parse into Int
       },
+    });
+
+    const result = comments.map((comment) => {
+      return {
+        Id: comment.Id,
+        TweetId: comment.TweetId,
+        AuthorNickname: comment.AuthorNickname,
+        Content: comment.Content,
+        Date: dayjs(comment.Date).format("YYYY-MM-DD HH:mm"),
+      };
     });
     res.send(result);
   } catch (e) {

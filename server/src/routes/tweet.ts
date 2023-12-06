@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import dayjs from "dayjs";
 
 const router = express.Router();
 
@@ -38,7 +39,7 @@ router.get("", async (req: any, res: any) => {
 
     /* count the number of comments and likes*/
     const result = await Promise.all(
-      tweets.map(async (tweet, index) => {
+      tweets.map(async (tweet) => {
         const comments = await prisma.comment.findMany({
           where: {
             TweetId: tweet.Id,
@@ -55,11 +56,12 @@ router.get("", async (req: any, res: any) => {
             TweetId: tweet.Id,
           },
         });
+        // console.log(dayjs(tweet.Date).format("YYYY-MM-DD HH:mm"));
         return {
           Id: tweet.Id,
           AuthorNickname: tweet.AuthorNickname,
           Content: tweet.Content,
-          Date: tweet.Date,
+          Date: dayjs(tweet.Date).format("YYYY-MM-DD HH:mm"),
           Comments: comments.length,
           Likes: likes.length,
           UserLike: userLike.length >= 1,
