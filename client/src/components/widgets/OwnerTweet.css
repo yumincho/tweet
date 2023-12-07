@@ -66,7 +66,7 @@ div .ownerTweetContent {
 .hoverAction:hover > .icon {
   padding: 4px;
   transform: scale(1.2);
-  transition-duration: 0.2s;
+  transition: var(--transition);
   border-radius: 100%;
   color: var(--color-main-orange);
   background-color: var(--color-light-orange);

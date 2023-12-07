@@ -45,10 +45,12 @@ const SignupPage = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button className="styledButton" onClick={userSignUp}>
-        signup
+      <button className="primaryButton" onClick={userSignUp}>
+        Sign up
       </button>
-      <button onClick={() => navigate("/")}>Login</button>
+      <button className="textButton" onClick={() => navigate("/")}>
+        Log in
+      </button>
     </div>
   );
 };

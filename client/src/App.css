@@ -5,7 +5,10 @@
 }
 
 * {
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
 #root {
@@ -23,6 +26,7 @@
   --color-light-orange: #fcf1df;
   --color-white: #ffffff;
   --color-black: #000000;
+  --color-red: #f70000;
 
   --color-gray-50: #fafafa;
   --color-gray-100: #f5f5f5;
@@ -35,11 +39,46 @@
   --color-gray-800: #424242;
   --color-gray-900: #212121;
 
+  --border-radius: 10px;
+
+  --transition: 0.2s ease-in-out;
+
   font-size: var(--font-size-default);
 }
 
 textarea {
   outline: none;
+}
+
+.primaryButton,
+.secondaryButton {
+  border-radius: var(--border-radius);
+  width: 300px;
+  padding: 8px 0;
+
+  background-color: var(--color-light-orange);
+
+  color: var(--color-main-orange);
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+  background-color: var(--color-main-orange);
+  color: var(--color-white);
+  transition: var(--transition);
+}
+
+.primaryButton {
+  font-size: var(--font-size-default);
+}
+
+.secondaryButton {
+  font-size: var(--font-size-small);
+}
+
+.textButton {
+  font-size: var(--font-size-small);
+  text-decoration: underline;
 }
 
 .container {

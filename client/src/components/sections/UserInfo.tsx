@@ -34,20 +34,14 @@ const UserInfo: React.FC<Props> = ({ nickname }) => {
   return nickname !== "" ? (
     <div className="containerItem userInfo test">
       <strong>{nickname} 님 🙌 </strong>
-      <button
-        style={{ fontSize: "var(--font-size-small)" }}
-        onClick={userLogout}
-      >
+      <button className="secondaryButton" onClick={userLogout}>
         Logout
       </button>
     </div>
   ) : (
     <div className="containerItem userInfo test">
       <strong> 로그인이 필요합니다. </strong>
-      <button
-        style={{ fontSize: "var(--font-size-small)" }}
-        onClick={userLogin}
-      >
+      <button className="secondaryButton" onClick={userLogin}>
         Login
       </button>
     </div>
