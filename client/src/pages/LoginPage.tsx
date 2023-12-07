@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SAPIBase } from "../tools/api";
+import { css } from "@emotion/css";
 
 axios.defaults.withCredentials = true;
 
@@ -27,7 +28,14 @@ const LoginPage = () => {
   };
 
   return (
-    <>
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      `}
+    >
+      <h2>Welcome!</h2>
       <input
         placeholder="nickname"
         value={nickname}
@@ -39,8 +47,11 @@ const LoginPage = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={userLogin}>Login</button>
-    </>
+      <button className="styledButton" onClick={userLogin}>
+        Login
+      </button>
+      <button onClick={() => navigate("/signup")}>Sign up</button>
+    </div>
   );
 };
 

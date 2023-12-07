@@ -1,7 +1,8 @@
 import React from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SAPIBase } from "../tools/api";
+import { css } from "@emotion/css";
 
 axios.defaults.withCredentials = true;
 
@@ -9,11 +10,7 @@ const SignupPage = () => {
   const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  // const navigate = useNavigate();
-
-  // const goToMain = () => {
-  //   navigate("/main");
-  // };
+  const navigate = useNavigate();
 
   const userSignUp = () => {
     const asyncFun = async () => {
@@ -30,7 +27,13 @@ const SignupPage = () => {
   };
 
   return (
-    <>
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      `}
+    >
       <input
         placeholder="nickname"
         value={nickname}
@@ -42,8 +45,11 @@ const SignupPage = () => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={userSignUp}>signup</button>
-    </>
+      <button className="styledButton" onClick={userSignUp}>
+        signup
+      </button>
+      <button onClick={() => navigate("/")}>Login</button>
+    </div>
   );
 };
 
