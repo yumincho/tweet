@@ -1,7 +1,6 @@
 import "./Feed.css";
 
 import React from "react";
-import { useContext } from "react";
 
 import axios from "axios";
 import { SAPIBase } from "../../tools/api";
@@ -28,7 +27,7 @@ const Feed = () => {
   const [content, setContent] = React.useState("");
 
   /* get user nickname from the context */
-  const { nickname } = useContext(UserInfoContext);
+  const { nickname } = React.useContext(UserInfoContext);
 
   /* api call when the user add new tweet */
   const addTweet = async () => {
@@ -42,15 +41,19 @@ const Feed = () => {
 
   /* reload feed when the user add new tweet */
   const getFeed = () => {
-    const getFeedFunc = async () => {
-      const { data } = await axios.get(SAPIBase + "/tweet", {
-        params: {
-          userNickname: nickname,
-        },
-      });
-      setFeedData(data.reverse());
-    };
-    getFeedFunc();
+    // getFeed only after the context loading ends
+    if (nickname !== "") {
+      // why does it work..?
+      const getFeedFunc = async () => {
+        const { data } = await axios.get(SAPIBase + "/tweet", {
+          params: {
+            userNickname: nickname,
+          },
+        });
+        setFeedData(data.reverse());
+      };
+      getFeedFunc();
+    }
   };
 
   /* track if the user add new tweet */
