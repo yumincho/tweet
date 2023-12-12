@@ -28,7 +28,7 @@ const UserInfo: React.FC<Props> = ({ nickname }) => {
   };
 
   const userLogin = () => {
-    navigate("/login");
+    navigate("/");
   };
 
   return nickname !== "" ? (
