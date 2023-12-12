@@ -36,8 +36,10 @@ h1 {
   line-height: 1.1;
 }
 
-/* reset button style */
-button {
+/* reset style */
+button,
+input,
+textarea {
   margin: 0;
   background: none;
   border: none;
@@ -47,6 +49,18 @@ button {
   overflow: visible;
   cursor: pointer;
   font-size: inherit;
+  outline: none;
+}
+
+/* new style */
+.inputDiv > input {
+  border: 1px solid var(--color-gray-400);
+  padding: 12px;
+  border-radius: var(--border-radius);
+}
+
+.inputDiv > input:focus {
+  border: 1px solid var(--color-main-orange);
 }
 
 @media (prefers-color-scheme: light) {

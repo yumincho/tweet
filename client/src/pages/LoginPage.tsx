@@ -35,22 +35,13 @@ const LoginPage = () => {
         align-items: center;
       `}
     >
-      <h2
-        className={css`
-          margin-bottom: 64px;
-        `}
-      >
+      <h2>
         Hi, SPARKY!
         <br />
         Log in to Your Account ⚡️
       </h2>
       <form
-        className={css`
-          display: flex;
-          flex-direction: column;
-          gap: 32px;
-          margin-bottom: 16px;
-        `}
+        className="inputForm"
         onSubmit={(e) => {
           e.preventDefault(); // prevent default onSubmit action?
           userLogin();
@@ -76,7 +67,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div>
+        <div className="submitInputDiv">
           <input type="submit" className="primaryButton" value="Log in" />
         </div>
       </form>

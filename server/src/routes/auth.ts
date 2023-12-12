@@ -5,6 +5,15 @@ const router = express.Router();
 
 const prisma = new PrismaClient();
 
+const isExistNickname = async (nickname: string) => {
+  const userInfo = await prisma.user.findUnique({
+    where: {
+      nickname: nickname,
+    },
+  });
+  return userInfo;
+};
+
 const isExistUser = async (nickname: string, password: string) => {
   const userInfo = await prisma.user.findUnique({
     where: {
@@ -32,6 +41,22 @@ router.get("/nickname", async (req: any, res: any) => {
       res.send(req.session.user.nickname);
     } else {
       res.send("");
+    }
+  } catch (e) {
+    return res.status(500).json({ error: e });
+  }
+});
+
+router.get("/nicknameExist", async (req: any, res: any) => {
+  try {
+    const { nickname } = req.query;
+    const result = await isExistNickname(nickname);
+    if (result) {
+      // if not null (nickname exist)
+      res.send(true);
+    } else {
+      // if null
+      res.send(false);
     }
   } catch (e) {
     return res.status(500).json({ error: e });

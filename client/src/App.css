@@ -46,10 +46,7 @@
   font-size: var(--font-size-default);
 }
 
-textarea {
-  outline: none;
-}
-
+/* Buttons */
 .primaryButton,
 .secondaryButton {
   border-radius: var(--border-radius);
@@ -72,6 +69,12 @@ textarea {
   font-size: var(--font-size-default);
 }
 
+.primaryButton:disabled {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-400);
+  cursor: not-allowed;
+}
+
 .secondaryButton {
   font-size: var(--font-size-small);
 }
@@ -81,6 +84,53 @@ textarea {
   text-decoration: underline;
 }
 
+/* Input */
+.inputForm {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+  gap: 32px;
+}
+
+.inputDiv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.submitInputDiv {
+  margin-top: 24px;
+}
+
+.inputLabel {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+}
+
+.inputInput.valid {
+  border: 1px solid var(--color-main-orange);
+}
+
+/* .inputInput.invalid, */
+.inputInput.invalid:focus {
+  border: 1px solid var(--color-red);
+}
+
+.inputMessage {
+  position: absolute;
+  top: calc(100% + 4px);
+  font-size: var(--font-size-small);
+  color: var(--color-red);
+}
+
+.validIcon {
+  position: absolute;
+  left: calc(100% - 40px);
+  bottom: 10px;
+}
+
+/* Container */
 .container {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -94,9 +144,10 @@ textarea {
   flex-direction: column;
 
   border-right: 1px solid var(--color-gray-200);
-  /* padding: 10px; */
 
   justify-content: space-between;
+
+  padding-right: 16px;
 }
 
 .rightContainer {
@@ -111,6 +162,7 @@ textarea {
   padding: 10px;
 }
 
+/* Etc. */
 .test {
   /* border: 1px solid black; */
 }
