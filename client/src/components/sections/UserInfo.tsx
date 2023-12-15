@@ -5,11 +5,25 @@ import { SAPIBase } from "../../tools/api";
 
 import "./UserInfo.css";
 
+import {
+  IoCreateOutline,
+  IoChatbubbleOutline,
+  IoFlashOutline,
+} from "react-icons/io5";
+
 interface Props {
   nickname: string;
+  tweetNum: number;
+  commentNum: number;
+  likeNum: number;
 }
 
-const UserInfo: React.FC<Props> = ({ nickname }) => {
+const UserInfo: React.FC<Props> = ({
+  nickname,
+  tweetNum,
+  commentNum,
+  likeNum,
+}) => {
   const navigate = useNavigate();
 
   const userLogout = () => {
@@ -34,6 +48,18 @@ const UserInfo: React.FC<Props> = ({ nickname }) => {
   return nickname !== "" ? (
     <div className="containerItem userInfo test">
       <strong>{nickname} 님 🙌 </strong>
+      <div className="userInfoNum">
+        <span className="iconAndFigure">
+          <IoCreateOutline classNAme="noHoverIcon" size="20" /> {tweetNum}
+        </span>
+        <span className="iconAndFigure">
+          <IoChatbubbleOutline className="noHoverIcon" size="20" /> {commentNum}
+        </span>
+        <span className="iconAndFigure">
+          <IoFlashOutline className="icon" size="20" /> {likeNum}
+        </span>
+      </div>
+
       <button className="secondaryButton" onClick={userLogout}>
         Logout
       </button>

@@ -27,7 +27,7 @@ const isExistUser = async (nickname: string, password: string) => {
 router.post("/signup", async (req: any, res: any) => {
   try {
     const { nickname, password } = req.body;
-    const result = await prisma.user.create({
+    await prisma.user.create({
       data: { nickname, password },
     });
   } catch (e) {
@@ -44,6 +44,38 @@ router.get("/nickname", async (req: any, res: any) => {
     }
   } catch (e) {
     return res.status(500).json({ error: e });
+  }
+});
+
+router.get("/userInfo", async (req: any, res: any) => {
+  try {
+    if (req.session.user) {
+      const tweets = await prisma.tweet.findMany({
+        where: {
+          AuthorNickname: req.session.user.nickname,
+        },
+      });
+      const comments = await prisma.comment.findMany({
+        where: {
+          AuthorNickname: req.session.user.nickname,
+        },
+      });
+      const likes = await prisma.like.findMany({
+        where: {
+          UserNickname: req.session.user.nickname,
+        },
+      });
+      res.send({
+        nickname: req.session.user.nickname,
+        tweetNum: tweets.length,
+        commentNum: comments.length,
+        likeNum: likes.length,
+      });
+    } else {
+      res.send("");
+    }
+  } catch (e) {
+    return res.status(500);
   }
 });
 

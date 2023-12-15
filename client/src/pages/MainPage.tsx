@@ -13,23 +13,38 @@ interface ChildrenProps {
 }
 
 const MainPage: React.FC<ChildrenProps> = ({ children }) => {
-  const [loginUserNickname, setLoginUserNickname] = React.useState("");
+  const [userNickname, setUserNickname] = React.useState("");
+  const [userTweetNum, setUserTweetNum] = React.useState(0);
+  const [userCommentNum, setUserCommentNum] = React.useState(0);
+  const [userLikeNum, setUserLikeNum] = React.useState(0);
 
   const getUserNickname = () => {
     const userNickname = async () => {
-      const userNickname = await axios.get(SAPIBase + "/auth/nickname");
-      setLoginUserNickname(userNickname.data);
+      // const userNickname = await axios.get(SAPIBase + "/auth/nickname");
+
+      const userInfo = await axios.get(SAPIBase + "/auth/userInfo");
+      const { nickname, tweetNum, commentNum, likeNum } = userInfo.data;
+      console.log("get data: ", nickname, tweetNum, commentNum, likeNum);
+      setUserNickname(nickname);
+      setUserTweetNum(tweetNum);
+      setUserCommentNum(commentNum);
+      setUserLikeNum(likeNum);
     };
     userNickname();
   };
 
-  React.useEffect(getUserNickname, [loginUserNickname]);
+  React.useEffect(getUserNickname, [userNickname]);
 
   return (
-    <UserInfoContext.Provider value={{ nickname: loginUserNickname }}>
+    <UserInfoContext.Provider value={{ nickname: userNickname }}>
       <div className="container">
         <div className="leftContainer test">
-          <UserInfo nickname={loginUserNickname} />
+          <UserInfo
+            nickname={userNickname}
+            tweetNum={userTweetNum}
+            commentNum={userCommentNum}
+            likeNum={userLikeNum}
+          />
           <Calendar />
         </div>
 
