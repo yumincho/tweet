@@ -120,6 +120,8 @@
 .inputMessage {
   position: absolute;
   top: calc(100% + 4px);
+  width: fit-content;
+  text-wrap: nowrap;
   font-size: var(--font-size-small);
   color: var(--color-red);
 }

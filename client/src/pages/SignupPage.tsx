@@ -16,6 +16,11 @@ const SignupPage = () => {
     React.useState(false);
   const [activatePWInput, setActivatePWInput] = React.useState(false);
 
+  const nicknameMinLen = 2;
+  const nicknameMaxLen = 20;
+  const passwordMinLen = 4;
+  const passwordMaxLen = 191;
+
   const navigate = useNavigate();
 
   const userSignUp = () => {
@@ -77,37 +82,61 @@ const SignupPage = () => {
     userSignUp();
   };
 
+  /* Nickname validation */
   const isNicknameInputValid = () => {
-    if (activateNicknameInput && nickname !== "" && !nicknameExist) return true;
+    if (
+      activateNicknameInput &&
+      nickname.length >= nicknameMinLen &&
+      nickname.length <= nicknameMaxLen &&
+      !nicknameExist
+    )
+      return true;
     else return false;
   };
 
   const nicknameInputValidationMessage = () => {
     if (!activateNicknameInput) return "";
-    else if (nickname == "") return "Nickname can't be blank.";
+    else if (nickname.length < nicknameMinLen)
+      return `Nickname should contain at least ${nicknameMinLen} characters.`;
+    else if (nickname.length > nicknameMaxLen)
+      return `Nickname should contain at most ${nicknameMaxLen} characters.`;
     else if (nicknameExist)
       return "You can't use this nickname. Please try again.";
   };
 
   const nicknameInputValidationStatus = () => {
     if (!activateNicknameInput) return "";
-    else if (nicknameExist || nickname === "") return "invalid";
+    else if (!isNicknameInputValid()) return "invalid";
     else return "valid";
   };
 
+  /* PW validation */
+  const reg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{4,}$$/;
+
   const isPWInputValid = () => {
-    if (activatePWInput && password !== "") return true;
+    if (
+      activatePWInput &&
+      password.length >= passwordMinLen &&
+      password.match(reg)
+    )
+      return true;
     else return false;
   };
 
   const pwInputValidationMessage = () => {
     if (!activatePWInput) return "";
-    else if (password == "") return "Password can't be blank.";
+    else if (password.length < passwordMinLen)
+      return `Password should contain at least ${passwordMinLen} characters.`;
+    else if (password.length > passwordMaxLen)
+      return `Password should contain at most ${passwordMaxLen} characters.`;
+    else if (!reg.test(password)) {
+      return `Password should contain both letter and digit. (e.g., aa11)`;
+    }
   };
 
   const pwInputValidationStatus = () => {
     if (!activatePWInput) return "";
-    else if (password === "") return "invalid";
+    else if (!isPWInputValid()) return "invalid";
     else return "valid";
   };
 
