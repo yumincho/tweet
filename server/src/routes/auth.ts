@@ -35,18 +35,6 @@ router.post("/signup", async (req: any, res: any) => {
   }
 });
 
-router.get("/nickname", async (req: any, res: any) => {
-  try {
-    if (req.session.user) {
-      res.send(req.session.user.nickname);
-    } else {
-      res.send("");
-    }
-  } catch (e) {
-    return res.status(500).json({ error: e });
-  }
-});
-
 router.get("/userInfo", async (req: any, res: any) => {
   try {
     if (req.session.user) {
@@ -143,14 +131,6 @@ router.post("/login", async (req: any, res: any) => {
 
       /* todo: db에 로그인 여부 저장? */
     }
-  } catch (e) {
-    return res.status(500).json({ error: e });
-  }
-});
-
-router.get("/isLogin", async (req: any, res: any) => {
-  try {
-    res.send(req.session.user);
   } catch (e) {
     return res.status(500).json({ error: e });
   }
