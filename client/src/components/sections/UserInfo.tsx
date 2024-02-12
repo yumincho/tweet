@@ -50,7 +50,7 @@ const UserInfo: React.FC<Props> = ({
       <strong>{nickname} 님 🙌 </strong>
       <div className="userInfoNum">
         <span className="iconAndFigure">
-          <IoCreateOutline classNAme="noHoverIcon" size="20" /> {tweetNum}
+          <IoCreateOutline className="noHoverIcon" size="20" /> {tweetNum}
         </span>
         <span className="iconAndFigure">
           <IoChatbubbleOutline className="noHoverIcon" size="20" /> {commentNum}
