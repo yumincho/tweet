@@ -59,6 +59,7 @@ const Tweet = ({
     });
     setLikesCount((curr) => curr + 1);
     setLike(true);
+    increaseLike();
   };
 
   const clickDislike = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,6 +72,7 @@ const Tweet = ({
     });
     setLikesCount((curr) => curr - 1);
     setLike(false);
+    decreaseLike();
   };
 
   return (

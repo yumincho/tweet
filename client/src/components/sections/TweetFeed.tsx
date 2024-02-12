@@ -31,7 +31,7 @@ const TweetFeed = () => {
   const [content, setContent] = React.useState("");
 
   /* get user nickname from the global store */
-  const { nickname } = useUserInfoStore();
+  const { nickname, increaseLike, decreaseLike } = useUserInfoStore();
 
   /* api call when the user add new comment */
   const addComment = async () => {
@@ -95,6 +95,7 @@ const TweetFeed = () => {
       TweetId: tweetId,
     });
     setLike(true);
+    increaseLike();
   };
 
   const clickDislike = async () => {
@@ -105,6 +106,7 @@ const TweetFeed = () => {
       },
     });
     setLike(false);
+    decreaseLike();
   };
 
   return (
