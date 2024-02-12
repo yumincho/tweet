@@ -20,13 +20,12 @@ interface TweetData {
 
 const Feed = () => {
   const [feedData, setFeedData] = React.useState<TweetData[]>([]);
-  const [count, setCount] = React.useState(0);
 
   /* manage content from textarea */
   const [content, setContent] = React.useState("");
 
   /* get nickname from global store */
-  const { nickname } = useUserInfoStore();
+  const { nickname, increaseTweet } = useUserInfoStore();
 
   /* api call when the user add new tweet */
   const addTweet = async () => {
@@ -35,7 +34,7 @@ const Feed = () => {
       Content: content,
     });
     setContent("");
-    setCount(count + 1);
+    increaseTweet();
   };
 
   /* reload feed when the user add new tweet */
@@ -56,7 +55,7 @@ const Feed = () => {
   };
 
   /* track if the user add new tweet */
-  React.useEffect(getFeed, [nickname, count]);
+  React.useEffect(getFeed, [nickname]);
 
   return (
     <>

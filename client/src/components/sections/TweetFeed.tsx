@@ -21,7 +21,6 @@ interface TweetFeedData {
 
 const TweetFeed = () => {
   const [tweetFeedData, setTweetFeedData] = React.useState<TweetFeedData[]>([]);
-  const [count, setCount] = React.useState(0);
 
   /* get tweetId from URL */
   const { state } = useLocation();
@@ -31,7 +30,8 @@ const TweetFeed = () => {
   const [content, setContent] = React.useState("");
 
   /* get user nickname from the global store */
-  const { nickname, increaseLike, decreaseLike } = useUserInfoStore();
+  const { nickname, increaseComment, increaseLike, decreaseLike } =
+    useUserInfoStore();
 
   /* api call when the user add new comment */
   const addComment = async () => {
@@ -41,7 +41,7 @@ const TweetFeed = () => {
       Content: content,
     });
     setContent("");
-    setCount(count + 1);
+    increaseComment();
   };
 
   /* reload feed when the user add new tweet */
@@ -58,7 +58,7 @@ const TweetFeed = () => {
   };
 
   /* track if the user add new comment */
-  React.useEffect(getTweetFeed, [count, tweetId]);
+  React.useEffect(getTweetFeed, [tweetId]);
 
   /* navigation */
   const navigate = useNavigate();
