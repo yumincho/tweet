@@ -1,7 +1,6 @@
 import "./TweetFeed.css";
 
 import React from "react";
-import { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import axios from "axios";
@@ -9,8 +8,9 @@ import { SAPIBase } from "../../tools/api";
 
 import Comment from "../widgets/Comment";
 import Textarea from "../widgets/Textarea";
-import UserInfoContext from "../contexts/userInfoContext";
 import OwnerTweet from "../widgets/OwnerTweet";
+
+import { useUserInfoStore } from "../../storage/user";
 
 interface TweetFeedData {
   Id: number;
@@ -30,8 +30,8 @@ const TweetFeed = () => {
   /* manage content from textarea */
   const [content, setContent] = React.useState("");
 
-  /* get user nickname from the context */
-  const { nickname } = useContext(UserInfoContext);
+  /* get user nickname from the global store */
+  const { nickname } = useUserInfoStore();
 
   /* api call when the user add new comment */
   const addComment = async () => {

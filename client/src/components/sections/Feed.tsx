@@ -7,8 +7,7 @@ import { SAPIBase } from "../../tools/api";
 
 import Tweet from "../widgets/Tweet";
 import Textarea from "../widgets/Textarea";
-import UserInfoContext from "../contexts/userInfoContext";
-
+import { useUserInfoStore } from "../../storage/user";
 interface TweetData {
   Id: number;
   AuthorNickname: string;
@@ -26,8 +25,8 @@ const Feed = () => {
   /* manage content from textarea */
   const [content, setContent] = React.useState("");
 
-  /* get user nickname from the context */
-  const { nickname } = React.useContext(UserInfoContext);
+  /* get nickname from global store */
+  const { nickname } = useUserInfoStore();
 
   /* api call when the user add new tweet */
   const addTweet = async () => {

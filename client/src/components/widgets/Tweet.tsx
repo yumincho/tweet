@@ -1,14 +1,14 @@
 import "./Tweet.css";
 
 import React from "react";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import { SAPIBase } from "../../tools/api";
 
-import UserInfoContext from "../contexts/userInfoContext";
 import { IoChatbubbleOutline, IoFlash, IoFlashOutline } from "react-icons/io5";
+
+import { useUserInfoStore } from "../../storage/user";
 
 interface Props {
   id: number;
@@ -42,10 +42,10 @@ const Tweet = ({
     });
   };
 
-  /* like and dislike action */
-  /* get user nickname from the context */
-  const { nickname } = useContext(UserInfoContext);
+  /* get userInfo from the global store */
+  const { nickname, increaseLike, decreaseLike } = useUserInfoStore();
 
+  /* like and dislike action */
   const [like, setLike] = React.useState(userLike);
   const [likesCount, setLikesCount] = React.useState(likes); // not fetch data from db in real, but show as it does
   const clickLike = async (e: React.MouseEvent<HTMLButtonElement>) => {
