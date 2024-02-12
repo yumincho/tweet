@@ -1,25 +1,33 @@
 .tweetContainer {
   display: flex;
   flex-direction: row;
-  width: 100%;
+
   gap: 16px;
+  padding: 16px 0px 10px 16px;
 }
 
 .tweetTextarea {
   margin: auto;
   height: 80px;
-  width: 100%;
-}
+  flex: 1 0 0;
 
-.error {
-  border: 1px solid var(--color-red);
+  padding: 12px 16px;
+
+  border-radius: var(--border-radius);
+  border: var(--color-gray-200) 1px solid;
 }
 
 .tweetButton {
   text-align: center;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-main-orange);
+  color: var(--color-white);
+
+  border-radius: var(--border-radius);
 }
 
 .tweetButton:disabled {
-  opacity: 0.5;
-  color: var(--color-gray-500);
+  background-color: var(--color-light-orange);
+  color: var(--color-gray-400);
 }
