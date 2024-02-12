@@ -24,6 +24,24 @@ const isExistUser = async (nickname: string, password: string) => {
   return userInfo;
 };
 
+/* session checking middleware */
+const checkSession = (req: any, res: any, next: any) => {
+  if (req.session.user) {
+    next();
+  } else {
+    return res.status(401).json({ error: "not authorized" });
+  }
+};
+
+/* session checking api for loader */
+router.get("/checkSession", async (req: any, res: any) => {
+  if (req.session.user) {
+    res.send(true);
+  } else {
+    res.send(false);
+  }
+});
+
 router.post("/signup", async (req: any, res: any) => {
   try {
     const { nickname, password } = req.body;
@@ -35,36 +53,28 @@ router.post("/signup", async (req: any, res: any) => {
   }
 });
 
-router.get("/userInfo", async (req: any, res: any) => {
-  try {
-    if (req.session.user) {
-      const tweets = await prisma.tweet.findMany({
-        where: {
-          AuthorNickname: req.session.user.nickname,
-        },
-      });
-      const comments = await prisma.comment.findMany({
-        where: {
-          AuthorNickname: req.session.user.nickname,
-        },
-      });
-      const likes = await prisma.like.findMany({
-        where: {
-          UserNickname: req.session.user.nickname,
-        },
-      });
-      res.send({
-        nickname: req.session.user.nickname,
-        tweetNum: tweets.length,
-        commentNum: comments.length,
-        likeNum: likes.length,
-      });
-    } else {
-      res.send("");
-    }
-  } catch (e) {
-    return res.status(500);
-  }
+router.get("/userInfo", checkSession, async (req: any, res: any) => {
+  const tweets = await prisma.tweet.findMany({
+    where: {
+      AuthorNickname: req.session.user.nickname,
+    },
+  });
+  const comments = await prisma.comment.findMany({
+    where: {
+      AuthorNickname: req.session.user.nickname,
+    },
+  });
+  const likes = await prisma.like.findMany({
+    where: {
+      UserNickname: req.session.user.nickname,
+    },
+  });
+  res.send({
+    nickname: req.session.user.nickname,
+    tweetNum: tweets.length,
+    commentNum: comments.length,
+    likeNum: likes.length,
+  });
 });
 
 router.get("/nicknameExist", async (req: any, res: any) => {
@@ -137,21 +147,11 @@ router.post("/login", async (req: any, res: any) => {
 });
 
 router.post("/logout", async (req: any, res: any) => {
-  try {
-    if (req.session.user) {
-      req.session.user = null;
+  req.session.user = null;
 
-      /* todo: db에서 로그인 정보 제거 */
+  /* todo: db에서 로그인 정보 제거 */
 
-      res.end();
-    } else {
-      /* todo */
-      console.log("not authorized");
-      res.end();
-    }
-  } catch (e) {
-    return res.status(500).json({ error: e });
-  }
+  res.end();
 });
 
 export default router;
