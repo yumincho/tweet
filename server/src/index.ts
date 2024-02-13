@@ -26,7 +26,7 @@ app.use(
     saveUninitialized: true,
     // store: new MemoryStore(),
     cookie: {
-      expires: new Date(Date.now() + 30 * minute),
+      maxAge: 30 * minute,
       // httpOnly: true,
       // sameSite: "none",
       // secure: true,
