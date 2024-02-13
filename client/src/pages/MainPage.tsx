@@ -5,7 +5,7 @@ import UserInfo from "../components/sections/UserInfo";
 import Calendar from "../components/widgets/Calendar";
 import { userInfoProps } from "../types/user";
 
-import { useUserInfoStore } from "../storage/User";
+import { useUserInfoStore } from "../storage/user";
 
 interface ChildrenProps {
   children: JSX.Element;
