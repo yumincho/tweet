@@ -35,6 +35,7 @@ const Feed = () => {
     });
     setContent("");
     increaseTweet();
+    getFeed();
   };
 
   /* reload feed when the user add new tweet */

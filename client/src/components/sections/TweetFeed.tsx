@@ -42,6 +42,7 @@ const TweetFeed = () => {
     });
     setContent("");
     increaseComment();
+    getTweetFeed();
   };
 
   /* reload feed when the user add new tweet */
