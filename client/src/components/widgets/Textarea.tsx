@@ -61,7 +61,7 @@ const Textarea = ({ content, setContent, addOne }: Props) => {
                   stroke:
                     content.length <= maxLength
                       ? "var(--color-main-orange)"
-                      : "var(--color-red)",
+                      : "var(--color-red-700)",
                 },
                 trail: {
                   stroke: "var(--color-gray-100)",
@@ -70,7 +70,7 @@ const Textarea = ({ content, setContent, addOne }: Props) => {
                   fill:
                     content.length <= maxLength
                       ? "var(--color-black)"
-                      : "var(--color-red)",
+                      : "var(--color-red-700)",
                   fontSize: "30px",
                 },
               }}

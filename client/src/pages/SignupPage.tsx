@@ -170,7 +170,7 @@ const SignupPage = () => {
             <IoAlertCircle
               className="validIcon"
               size="28"
-              color="var(--color-red)"
+              color="var(--color-red-700)"
             />
           ) : (
             ""
@@ -192,7 +192,7 @@ const SignupPage = () => {
             <IoAlertCircle
               className="validIcon"
               size="28"
-              color="var(--color-red)"
+              color="var(--color-red-700)"
             />
           ) : (
             ""
