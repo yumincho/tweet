@@ -8,6 +8,7 @@ import { SAPIBase } from "../../tools/api";
 import Tweet from "../widgets/Tweet";
 import Textarea from "../widgets/Textarea";
 import { useUserInfoStore } from "../../storage/user";
+import { IoRefresh } from "react-icons/io5";
 interface TweetData {
   Id: number;
   AuthorNickname: string;
@@ -38,11 +39,16 @@ const Feed = () => {
     getFeed();
   };
 
+  const [spin, setSpin] = React.useState(false);
+
   /* reload feed when the user add new tweet */
   const getFeed = () => {
     // getFeed only after the context loading ends
     if (nickname !== "") {
-      // why does it work..?
+      setSpin(true);
+      setTimeout(() => {
+        setSpin(false);
+      }, 1000);
       const getFeedFunc = async () => {
         const { data } = await axios.get(SAPIBase + "/tweet", {
           params: {
@@ -60,6 +66,17 @@ const Feed = () => {
 
   return (
     <>
+      <div className="iconBar">
+        <button>
+          <IoRefresh
+            className={`iconButton ${spin ? "spin" : ""}`}
+            color="var(--color-black)"
+            size={20}
+            onClick={getFeed}
+          />
+        </button>
+      </div>
+
       <div className="feedList test">
         {feedData.map(
           ({

@@ -9,6 +9,7 @@ import { SAPIBase } from "../../tools/api";
 import Comment from "../widgets/Comment";
 import Textarea from "../widgets/Textarea";
 import OwnerTweet from "../widgets/OwnerTweet";
+import { IoRefresh, IoArrowBack } from "react-icons/io5";
 
 import { useUserInfoStore } from "../../storage/user";
 
@@ -45,8 +46,14 @@ const TweetFeed = () => {
     getTweetFeed();
   };
 
+  const [spin, setSpin] = React.useState(false);
+
   /* reload feed when the user add new tweet */
   const getTweetFeed = () => {
+    setSpin(true);
+    setTimeout(() => {
+      setSpin(false);
+    }, 1000);
     const getFeedFunc = async () => {
       const { data } = await axios.get(SAPIBase + "/comment", {
         params: {
@@ -112,8 +119,23 @@ const TweetFeed = () => {
 
   return (
     <>
-      <button onClick={onBackClick}>Back to main</button>
-      {/* main tweet */}
+      <div className="iconBar">
+        <button>
+          <IoRefresh
+            className={`iconButton ${spin ? "spin" : ""}`}
+            color="var(--color-black)"
+            size={20}
+            onClick={getTweetFeed}
+          />
+        </button>
+        <button className="iconButton">
+          <IoArrowBack
+            color="var(--color-black)"
+            size={20}
+            onClick={onBackClick}
+          />
+        </button>
+      </div>
       <OwnerTweet
         id={tweetId}
         author={tweetAuthor}
