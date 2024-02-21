@@ -122,13 +122,6 @@ router.post("/login", async (req: any, res: any) => {
       /* no matching user */
       if (!userInfo) {
         throw new Error("no unique user");
-      } else if (
-        /* nickname exist, but wrong password */
-        userInfo?.nickname == nickname &&
-        userInfo.password != password
-      ) {
-        /* todo */
-        throw new Error("wrong password");
       } else {
         /* login success */
         req.session.user = {
@@ -141,8 +134,10 @@ router.post("/login", async (req: any, res: any) => {
 
       /* todo: db에 로그인 여부 저장? */
     }
-  } catch (e) {
-    return res.status(500).json({ error: e });
+  } catch (e: any) {
+    if (e.message === "no unique user") {
+      return res.status(401).send("Incorrect nickname or password.");
+    }
   }
 });
 

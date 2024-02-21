@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SAPIBase } from "../tools/api";
 import { css } from "@emotion/css";
+import "./LoginPage.css";
+import { IoInformationCircleOutline, IoClose } from "react-icons/io5";
 
 axios.defaults.withCredentials = true;
 
 const LoginPage = () => {
   const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [isLoginFailed, setIsLoginFailed] = React.useState(false);
 
   const navigate = useNavigate();
 
@@ -22,9 +25,12 @@ const LoginPage = () => {
         },
         { withCredentials: true }
       );
+      setIsLoginFailed(false);
       navigate("/main");
     };
-    asyncFun().catch((e) => window.alert(`AN ERROR OCCURED! ${e}`));
+    asyncFun().catch(() => {
+      setIsLoginFailed(true);
+    });
   };
 
   return (
@@ -47,6 +53,13 @@ const LoginPage = () => {
           userLogin();
         }}
       >
+        {isLoginFailed && (
+          <div className="loginFailedDiv">
+            <IoInformationCircleOutline size={20} />
+            Incorrect nickname or password.
+            <IoClose onClick={() => setIsLoginFailed(false)} />
+          </div>
+        )}
         <div className="inputDiv">
           <label className="inputLabel">Nickname</label>
           <input
