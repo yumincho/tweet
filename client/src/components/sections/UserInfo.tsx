@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SAPIBase } from "../../tools/api";
 
+import { useUserInfoStore } from "../../storage/user";
+import { userInfoProps } from "../../types/user";
+
 import "./UserInfo.css";
 
 import {
@@ -12,18 +15,37 @@ import {
 } from "react-icons/io5";
 
 interface Props {
-  nickname: string;
-  tweetNum: number;
-  commentNum: number;
-  likeNum: number;
+  userInfo: userInfoProps;
 }
 
-const UserInfo: React.FC<Props> = ({
-  nickname,
-  tweetNum,
-  commentNum,
-  likeNum,
-}) => {
+const UserInfo: React.FC<Props> = ({ userInfo }) => {
+  const {
+    nickname,
+    tweetNum,
+    commentNum,
+    likeNum,
+    setNickname,
+    setTweet,
+    setComment,
+    setLike,
+  } = useUserInfoStore();
+
+  const getUserInfo = () => {
+    const { nickname, tweetNum, commentNum, likeNum } = userInfo;
+    setNickname(nickname);
+    setTweet(tweetNum);
+    setComment(commentNum);
+    setLike(likeNum);
+  };
+
+  React.useEffect(getUserInfo, [
+    setNickname,
+    setTweet,
+    setComment,
+    setLike,
+    userInfo,
+  ]);
+
   const navigate = useNavigate();
 
   const userLogout = () => {
