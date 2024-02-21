@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SAPIBase } from "../tools/api";
 import { css } from "@emotion/css";
-
 import { IoAlertCircle } from "react-icons/io5";
 
 axios.defaults.withCredentials = true;
@@ -34,7 +33,19 @@ const SignupPage = () => {
         { withCredentials: true }
       );
     };
-    asyncFun().catch((e) => window.alert(`AN ERROR OCCURED! ${e}`));
+    asyncFun()
+      .then(async () => {
+        await axios.post(
+          SAPIBase + "/auth/login",
+          {
+            nickname,
+            password,
+          },
+          { withCredentials: true }
+        );
+      })
+      .then(() => navigate("/main"))
+      .catch((e) => window.alert(`AN ERROR OCCURED! ${e}`));
   };
 
   React.useEffect(() => {
@@ -77,7 +88,7 @@ const SignupPage = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent default action
     userSignUp();
   };

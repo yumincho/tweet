@@ -48,6 +48,7 @@ router.post("/signup", async (req: any, res: any) => {
     await prisma.user.create({
       data: { nickname, password },
     });
+    return res.status(200);
   } catch (e) {
     return res.status(500).json({ error: e });
   }
