@@ -28,6 +28,9 @@ const Feed = () => {
   /* get nickname from global store */
   const { nickname, increaseTweet } = useUserInfoStore();
 
+  /* track if the user press enter */
+  const canSubmit = React.useRef(true);
+
   /* api call when the user add new tweet */
   const addTweet = async () => {
     await axios.post(SAPIBase + "/tweet", {
@@ -37,6 +40,9 @@ const Feed = () => {
     setContent("");
     increaseTweet();
     getFeed();
+
+    /* prevent duplicated submit */
+    if (content === "") canSubmit.current = true;
   };
 
   const [spin, setSpin] = React.useState(false);
@@ -102,7 +108,12 @@ const Feed = () => {
           )
         )}
       </div>
-      <Textarea content={content} setContent={setContent} addOne={addTweet} />
+      <Textarea
+        content={content}
+        setContent={setContent}
+        addOne={addTweet}
+        canSubmit={canSubmit}
+      />
     </>
   );
 };

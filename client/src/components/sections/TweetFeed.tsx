@@ -34,6 +34,9 @@ const TweetFeed = () => {
   const { nickname, increaseComment, increaseLike, decreaseLike } =
     useUserInfoStore();
 
+  /* track if the user press enter */
+  const canSubmit = React.useRef(true);
+
   /* api call when the user add new comment */
   const addComment = async () => {
     await axios.post(SAPIBase + "/comment", {
@@ -44,6 +47,9 @@ const TweetFeed = () => {
     setContent("");
     increaseComment();
     getTweetFeed();
+
+    /* prevent duplicated submit */
+    if (content === "") canSubmit.current = true;
   };
 
   const [spin, setSpin] = React.useState(false);
@@ -161,7 +167,12 @@ const TweetFeed = () => {
         ))}
       </div>
       {/* text input field */}
-      <Textarea content={content} setContent={setContent} addOne={addComment} />
+      <Textarea
+        content={content}
+        setContent={setContent}
+        addOne={addComment}
+        canSubmit={canSubmit}
+      />
     </>
   );
 };

@@ -1,7 +1,5 @@
 import React from "react";
-
 import "./Textarea.css";
-
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
@@ -11,29 +9,49 @@ interface Props {
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
   addOne: () => Promise<void>;
+  canSubmit: React.MutableRefObject<boolean>;
 }
 
-const Textarea = ({ content, setContent, addOne }: Props) => {
-  const [isValidLength, setIsValidLength] = React.useState(false);
+const checkValidLength = (content: string) => {
+  const processedContent = content.replace(/[\n\r\t]|\s+/g, "");
+  return processedContent.length > 0 && processedContent.length <= 140;
+};
 
-  const checkTweet = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length > 140 || e.target.value.length < 1) {
-      setIsValidLength(false);
-    } else {
-      setIsValidLength(true);
-    }
+const Textarea = ({ content, setContent, addOne, canSubmit }: Props) => {
+  const formRef = React.useRef<HTMLFormElement>(null);
+
+  const onFormSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
+    if (checkValidLength(content)) addOne();
   };
+
   return (
     <>
-      {/* <span className="tweetAuthor">작성자 | {nickname}</span>  */}
-      <div className="tweetContainer">
+      <form className="tweetContainer" onSubmit={onFormSubmit} ref={formRef}>
         <textarea
+          minLength={1}
           placeholder="140자 이하로 입력해 주세요."
           className={`tweetTextarea`}
           value={content}
           onChange={(e) => {
-            checkTweet(e);
             setContent(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (
+              e.key === "Enter" &&
+              !e.shiftKey &&
+              canSubmit.current &&
+              checkValidLength(e.currentTarget.value)
+            ) {
+              canSubmit.current = false;
+              e.preventDefault();
+              formRef.current?.dispatchEvent(
+                new Event("submit", { bubbles: true, cancelable: true })
+              );
+            }
+          }}
+          onKeyUp={() => {
+            if (content.length === 0) canSubmit.current = true;
           }}
         />
         <div
@@ -77,14 +95,14 @@ const Textarea = ({ content, setContent, addOne }: Props) => {
             />
           </div>
           <button
-            disabled={!isValidLength}
+            type="submit"
+            disabled={!checkValidLength(content)}
             className="tweetButton"
-            onClick={addOne}
           >
             ↩︎
           </button>
         </div>
-      </div>
+      </form>
     </>
   );
 };
