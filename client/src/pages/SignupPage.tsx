@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SAPIBase } from "../tools/api";
 import { css } from "@emotion/css";
-import { IoAlertCircle } from "react-icons/io5";
+import {
+  IoAlertCircle,
+  IoInformationCircleOutline,
+  IoClose,
+} from "react-icons/io5";
 
 axios.defaults.withCredentials = true;
 
@@ -14,6 +18,7 @@ const SignupPage = () => {
   const [activateNicknameInput, setActivateNicknameInput] =
     React.useState(false);
   const [activatePWInput, setActivatePWInput] = React.useState(false);
+  const [isSignupFailed, setIsSignupFailed] = React.useState(false);
 
   const nicknameMinLen = 2;
   const nicknameMaxLen = 20;
@@ -32,6 +37,7 @@ const SignupPage = () => {
         },
         { withCredentials: true }
       );
+      setIsSignupFailed(false);
     };
     asyncFun()
       .then(async () => {
@@ -45,7 +51,7 @@ const SignupPage = () => {
         );
       })
       .then(() => navigate("/main"))
-      .catch((e) => window.alert(`AN ERROR OCCURED! ${e}`));
+      .catch(() => setIsSignupFailed(true));
   };
 
   React.useEffect(() => {
@@ -165,6 +171,13 @@ const SignupPage = () => {
         Sign Up for an Account 🙌
       </h2>
       <form className="inputForm" onSubmit={handleSubmit}>
+        {isSignupFailed && (
+          <div className="loginFailedDiv">
+            <IoInformationCircleOutline size={20} />
+            Nickname is invalid or already taken
+            <IoClose onClick={() => setIsSignupFailed(false)} />
+          </div>
+        )}
         <div className="inputDiv">
           <label className="inputLabel">Nickname</label>
           <input
