@@ -36,7 +36,7 @@ app.use(
 
 const whitelist = [
   "http://localhost:5173",
-  "https://yumyum.newbie.sparcsandbox.com/",
+  "https://yumyum.newbie.sparcsandbox.com",
 ];
 const corsOptions = {
   origin: (origin: any, callback: any) => {
